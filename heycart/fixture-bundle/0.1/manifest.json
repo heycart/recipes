@@ -1,0 +1,7 @@
+{
+    "bundles": {
+        "HeyCart\\FixtureBundle\\FixtureBundle": [
+            "all"
+        ]
+    }
+}

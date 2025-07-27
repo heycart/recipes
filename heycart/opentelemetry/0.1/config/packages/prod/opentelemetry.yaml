@@ -1,0 +1,5 @@
+# see https://github.com/heycartLabs/opentelemetry/blob/main/README.md
+heycart:
+    profiler:
+        integrations:
+            - OpenTelemetry

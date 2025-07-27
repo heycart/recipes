@@ -1,0 +1,132 @@
+{
+    "copy-from-recipe": {
+        "bin\/": "%BIN_DIR%\/",
+        "config\/": "%CONFIG_DIR%\/",
+        "custom\/": "custom\/",
+        "files\/": "files\/",
+        "public\/": "%PUBLIC_DIR%\/",
+        "var\/": "var\/",
+        "src\/": "src\/",
+        "root\/": ""
+    },
+    "bundles": {
+        "HeyCart\\Core\\Framework\\Framework": [
+            "all"
+        ],
+        "HeyCart\\Core\\System\\System": [
+            "all"
+        ],
+        "HeyCart\\Core\\Content\\Content": [
+            "all"
+        ],
+        "HeyCart\\Core\\Checkout\\Checkout": [
+            "all"
+        ],
+        "HeyCart\\Core\\Maintenance\\Maintenance": [
+            "all"
+        ],
+        "HeyCart\\Core\\DevOps\\DevOps": [
+            "e2e"
+        ],
+        "HeyCart\\Core\\Profiling\\Profiling": [
+            "all"
+        ],
+        "HeyCart\\Administration\\Administration": [
+            "all"
+        ],
+        "HeyCart\\Storefront\\Storefront": [
+            "all"
+        ],
+        "HeyCart\\Elasticsearch\\Elasticsearch": [
+            "all"
+        ]
+    },
+    "container": {
+        "heycart.store.frw": true,
+        "default_cdn_strategy": "physical_filename",
+        "heycart.cdn.strategy": "%env(default:default_cdn_strategy:HEYCART_CDN_STRATEGY_DEFAULT)%",
+        "env(OPENSEARCH_URL)": "http:\/\/localhost:9200"
+    },
+    "env": {
+        "APP_ENV": "prod",
+        "APP_URL": "http:\/\/127.0.0.1:8000",
+        "APP_SECRET": "%generate(secret)%",
+        "INSTANCE_ID": "%generate(secret)%",
+        "BLUE_GREEN_DEPLOYMENT": "0",
+        "DATABASE_URL": "mysql:\/\/root:root@localhost\/heycart",
+        "#1": "With HeyCart 6.4.17.0 the MAILER_DSN variable will be used in this template instead of MAILER_URL",
+        "MAILER_URL": "null:\/\/null",
+        "STOREFRONT_PROXY_URL": "http:\/\/localhost",
+        "HEYCART_HTTP_CACHE_ENABLED": "1",
+        "HEYCART_HTTP_DEFAULT_TTL": "7200",
+        "OPENSEARCH_URL": "http:\/\/localhost:9200",
+        "HEYCART_ES_ENABLED": "0",
+        "HEYCART_ES_INDEXING_ENABLED": "0",
+        "HEYCART_ES_INDEX_PREFIX": "sw",
+        "HEYCART_ES_THROW_EXCEPTION": "1"
+    },
+    "gitignore": [
+        ".env.local",
+        ".env.local.php",
+        ".env.*.local",
+        "\/public\/bundles\/*",
+        "\/public\/media\/*",
+        "\/public\/theme\/*",
+        "\/public\/thumbnail\/*",
+        "\/public\/sitemap\/*",
+        "\/files\/*",
+        "!\/files\/.htaccess",
+        "\/var\/*",
+        "!\/var\/.htaccess",
+        "\/auth.json",
+        "\/install.lock",
+        "public\/asset-manifest.json",
+        "files\/asset-manifest.json"
+    ],
+    "composer-scripts": {
+        "assets:install": "symfony-cmd"
+    },
+    "docker-compose": {
+        "docker-compose.yml": {
+            "services": [
+                "database:",
+                "  image: mariadb:11.4",
+                "  environment:",
+                "    MARIADB_DATABASE: heycart",
+                "    MARIADB_ROOT_PASSWORD: root",
+                "    MARIADB_USER: heycart",
+                "    MARIADB_PASSWORD: heycart",
+                "  volumes:",
+                "    - db-data:\/var\/lib\/mysql:rw",
+                "  healthcheck:",
+                "    test: [ \"CMD\", \"mariadb-admin\" ,\"ping\", \"-h\", \"localhost\", \"-proot\" ]",
+                "    start_period: 10s",
+                "    start_interval: 3s",
+                "    interval: 5s",
+                "    timeout: 1s",
+                "    retries: 10",
+                "opensearch:",
+                "  image: opensearchproject\/opensearch:2",
+                "  volumes:",
+                "    - opensearch-data:\/usr\/share\/opensearch\/data",
+                "  environment:",
+                "    discovery.type: single-node",
+                "    plugins.security.disabled: 'true'"
+            ],
+            "volumes": [
+                "db-data:",
+                "opensearch-data:"
+            ]
+        },
+        "docker-compose.override.yml": {
+            "services": [
+                "database:",
+                "  ports:",
+                "    - \"3306\"",
+                "opensearch:",
+                "  ports:",
+                "    - \"9200\""
+            ]
+        }
+    }
+}

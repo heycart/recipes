@@ -1,0 +1,32 @@
+name: Update heycart/platform package
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+        paths:
+            - "heycart/administration/**"
+            - "heycart/core/**"
+            - "heycart/storefront/**"
+            - "heycart/elasticsearch/**"
+jobs:
+    platform-sync:
+        runs-on: ubuntu-latest
+        concurrency: platform-sync-${{ github.ref }}
+        name: Sync files for heycart/platform package
+        steps:
+            - name: Clone
+              uses: actions/checkout@v4
+              with:
+                token: ${{ secrets.CI_COMMIT_PAT }}
+
+            - name: Sync files
+              run: php .github/sync-platform.php
+
+            - name: Add files to git
+              run: git add .
+
+            - name: Update heycart/platform package
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                commit_message: 'chore: update heycart/platform package'
