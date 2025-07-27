@@ -1,0 +1,30 @@
+{
+    "manifests": {
+        "heycart/opentelemetry": {
+            "manifest": {
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/"
+                },
+                "bundles": {
+                    "HeyCart\\OpenTelemetry\\OpenTelemetryHeyCartBundle": [
+                        "all"
+                    ]
+                }
+            },
+            "files": {
+                "config/packages/prod/opentelemetry.yaml": {
+                    "contents": [
+                        "# see https://github.com/heycartLabs/opentelemetry/blob/main/README.md",
+                        "heycart:",
+                        "    profiler:",
+                        "        integrations:",
+                        "            - OpenTelemetry",
+                        ""
+                    ],
+                    "executable": false
+                }
+            },
+            "ref": "7af9dbb7e1d1ed32eefba8e5ca01e7ff67b20e0e"
+        }
+    }
+}

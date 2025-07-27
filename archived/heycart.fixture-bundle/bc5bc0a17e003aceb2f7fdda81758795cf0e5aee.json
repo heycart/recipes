@@ -1,0 +1,15 @@
+{
+    "manifests": {
+        "heycart/fixture-bundle": {
+            "manifest": {
+                "bundles": {
+                    "HeyCart\\FixtureBundle\\FixtureBundle": [
+                        "all"
+                    ]
+                }
+            },
+            "files": [],
+            "ref": "bc5bc0a17e003aceb2f7fdda81758795cf0e5aee"
+        }
+    }
+}

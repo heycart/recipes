@@ -1,0 +1,39 @@
+{
+    "manifests": {
+        "open-telemetry/opentelemetry-logger-monolog": {
+            "manifest": {
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/"
+                }
+            },
+            "files": {
+                "config/packages/prod/opentelemetry_logger_monolog.yaml": {
+                    "contents": [
+                        "# see https://github.com/heycartLabs/opentelemetry/blob/main/README.md",
+                        "",
+                        "monolog:",
+                        "    handlers:",
+                        "        main:",
+                        "            type: fingers_crossed",
+                        "            action_level: error",
+                        "            handler: nested",
+                        "            excluded_http_codes: [ 404, 405 ]",
+                        "            buffer_size: 50",
+                        "        nested:",
+                        "            type: service",
+                        "            id: monolog.handler.open_telemetry",
+                        "            level: error",
+                        "            formatter: null",
+                        "        # handler for heycart/elasticsearch, comment it out if package is not installed",
+                        "        elasticsearch:",
+                        "            type: service",
+                        "            id: monolog.handler.open_telemetry",
+                        ""
+                    ],
+                    "executable": false
+                }
+            },
+            "ref": "7ca7bf04eb7cd7a87515208b0a792a7d843ee88b"
+        }
+    }
+}
