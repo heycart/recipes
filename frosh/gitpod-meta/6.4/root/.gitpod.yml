@@ -23,7 +23,6 @@ tasks:
 
         ./bin/console system:config:set core.frw.completedAt '2019-10-07T10:46:23+00:00'
 
-        ./bin/console framework:demodata --products 300
         ./bin/console dal:refresh:index
 
         rm -rf var/cache/*
