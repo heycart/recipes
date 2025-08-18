@@ -67,8 +67,8 @@
                         "#syntax=docker/dockerfile:1.4",
                         "",
                         "# pin versions",
-                        "FROM heycart/docker-base:8.4 AS base-image",
-                        "FROM heycart/heycart-cli:latest-php-8.3 AS heycart-cli",
+                        "FROM ghcr.io/docker-base:8.4 AS base-image",
+                        "FROM ghcr.io/heycart-cli:latest-php-8.3 AS heycart-cli",
                         "",
                         "# build",
                         "",
@@ -94,7 +94,7 @@
                     "executable": false
                 }
             },
-            "ref": "0bb9c50d32b9485eb86084947bbae3a669497b69"
+            "ref": "3931198f93c2306b2a346f589328fbd2bfd1760d"
         }
     }
 }
