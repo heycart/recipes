@@ -1,8 +1,8 @@
 #syntax=docker/dockerfile:1.4
 
 # pin versions
-FROM heycart/docker-base:8.4 AS base-image
-FROM heycart/heycart-cli:latest-php-8.3 AS heycart-cli
+FROM ghcr.io/docker-base:8.4 AS base-image
+FROM ghcr.io/heycart-cli:latest-php-8.3 AS heycart-cli
 
 # build
 
